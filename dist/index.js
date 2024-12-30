@@ -1,0 +1,8 @@
+(function(){"use strict";const c=[{key:"webhookUrl",type:"string",default:"",title:"N8N Webhook URL",description:"Enter your N8N webhook URL"}];function s(o,r=""){return o.map(t=>typeof t=="object"&&t!==null?`${r}- ${i(t,`${r}  `)}`:`${r}- ${String(t)}`).join(`
+`)}function i(o,r=""){if(Array.isArray(o))return s(o,r);const t=[];for(const[n,e]of Object.entries(o))e!=null&&(Array.isArray(e)?t.push(`${r}${n}:
+${s(e,`${r}  `)}`):typeof e=="object"?t.push(`${r}${n}:
+${i(e,`${r}  `)}`):t.push(`${r}${n}: ${String(e)}`));return t.join(`
+`)}function f(o){return typeof o=="string"?o:Array.isArray(o)?s(o):typeof o=="object"&&o!==null?"markdown"in o?o.markdown:"body"in o?typeof o.body=="string"?o.body:i(o.body):"text"in o?o.text:i(o):String(o)}function g(){return{async triggerWebhook(){const o=await logseq.Editor.getCurrentBlock();if(o)try{const r=logseq.settings?.webhookUrl;if(!r){await logseq.UI.showMsg("Please configure the N8N webhook URL in plugin settings","error");return}const t={logseq:o.content},n=await fetch(r,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(t)});if(!n.ok)throw new Error(`HTTP error! status: ${n.status}`);const e=await n.json();if(e){const a=f(e),u=a.startsWith("-")?a:`- N8N Response:
+${a.split(`
+`).map(y=>`  ${y}`).join(`
+`)}`;await logseq.Editor.insertBlock(o.uuid,u,{sibling:!1})}}catch(r){console.error("Error calling N8N webhook:",r),await logseq.UI.showMsg(`Error: ${r instanceof Error?r.message:"Unknown error"}`,"error")}}}}function l(){logseq.useSettingsSchema(c);const o=g();logseq.provideModel(o),logseq.Editor.registerSlashCommand("n8n",()=>o.triggerWebhook()),console.log("N8N Webhook Plugin initialized with settings support")}logseq.ready(l).catch(console.error)})();
