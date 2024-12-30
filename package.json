@@ -1,6 +1,6 @@
 {
     "name": "logseq-n8n-integration",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Ein LogSEQ Plugin zur Integration mit N8N Webhooks",
     "main": "dist/index.js",
     "scripts": {

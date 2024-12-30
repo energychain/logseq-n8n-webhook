@@ -114,7 +114,7 @@ function createModel() {
           // Ensure the content starts with a list marker
           const contentToInsert = formattedContent.startsWith('-') ? 
             formattedContent : 
-            `- N8N Response:\n${formattedContent.split('\n').map(line => `  ${line}`).join('\n')}`
+            `- ${formattedContent.split('\n').map(line => `  ${line}`).join('\n')}`
           
           await logseq.Editor.insertBlock(
             block.uuid, 
