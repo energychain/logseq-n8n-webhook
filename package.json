@@ -1,0 +1,23 @@
+{
+    "name": "logseq-n8n-integration",
+    "version": "0.0.1",
+    "description": "Ein LogSEQ Plugin zur Integration mit N8N Webhooks",
+    "main": "dist/index.js",
+    "scripts": {
+      "build": "vite build",
+      "dev": "vite"
+    },
+    "dependencies": {
+      "@logseq/libs": "^0.0.14"
+    },
+    "devDependencies": {
+      "vite": "^4.1.0",
+      "typescript": "^4.9.0",
+      "@types/node": "^18.0.0"
+    },
+    "logseq": {
+      "id": "_logseq-n8n-integration",
+      "title": "N8N Integration",
+      "icon": "icon.png"
+    }
+  }
